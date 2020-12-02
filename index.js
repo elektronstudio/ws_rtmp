@@ -4,33 +4,37 @@ const WebSocketServer = require("ws").Server;
 const wss = new WebSocketServer({ port: 8080 });
 
 wss.on("connection", (ws, req) => {
-  //const rtmpUrl = "file.flv";
-  const rtmpUrl = "test.mp4";
-  //const rtmpUrl = "rtmp://o1.babahhcdn.com:1935/bb1150-lo/test123";
-  console.log("Target RTMP URL:", rtmpUrl);
+  const url = "test.flv";
+  // const key = "test123";
+  // const url = "rtmp://o1.babahhcdn.com:1935/bb1150-lo/" + key;
 
-  // const ffmpeg = child_process.spawn("ffmpeg", [
-  //   "-f",
-  //   "lavfi",
-  //   "-i",
-  //   "anullsrc",
+  const ffmpeg = child_process.spawn("ffmpeg", [
+    "-f",
+    "lavfi",
+    "-i",
+    "anullsrc",
 
-  //   "-i",
-  //   "-",
+    "-i",
+    "-",
 
-  //   "-shortest",
+    "-shortest",
 
-  //   "-vcodec",
-  //   "copy",
+    "-vcodec",
+    "copy",
 
-  //   "-acodec",
-  //   "aac",
+    "-acodec",
+    "aac",
 
-  //   "-f",
-  //   "flv",
+    "-f",
+    "flv",
 
-  //   rtmpUrl,
-  // ]);
+    "-y",
+
+    url,
+  ]);
+
+  /*
+  const url = "test.mp4";
 
   const ffmpeg = child_process.spawn("ffmpeg", [
     "-i",
@@ -38,9 +42,6 @@ wss.on("connection", (ws, req) => {
 
     "-movflags",
     "+empty_moov",
-
-    "-movflags",
-    "+separate_moof",
 
     "-movflags",
     "+faststart",
@@ -54,25 +55,14 @@ wss.on("connection", (ws, req) => {
     "-f",
     "mp4",
 
-    //force to overwrite
-    "-y",
-
-    // used for audio sync
-    "-use_wallclock_as_timestamps",
-    "1",
-    "-async",
-    "1",
-
-    //'-filter_complex', 'aresample=44100', // resample audio to 44100Hz, needed if input is not 44100
-    //'-strict', 'experimental',
-    "-bufsize",
-    "1000",
-
     "-map",
     "0",
 
-    rtmpUrl,
+    "-y",
+
+    url,
   ]);
+  */
 
   ffmpeg.on("close", (code, signal) => {
     console.log(
@@ -82,11 +72,11 @@ wss.on("connection", (ws, req) => {
   });
 
   ffmpeg.stdin.on("error", (e) => {
-    console.log("FFmpeg STDIN Error", e);
+    console.log(e);
   });
 
   ffmpeg.stderr.on("data", (data) => {
-    console.log("FFmpeg STDERR:", data.toString());
+    console.log(data.toString());
   });
 
   ws.on("message", (msg) => {
