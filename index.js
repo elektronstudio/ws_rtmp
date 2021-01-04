@@ -4,13 +4,16 @@ const WebSocketServer = require("ws").Server;
 const wss = new WebSocketServer({ port: 8080 });
 
 wss.on("connection", (ws, req) => {
-  const url = "test.flv";
-  // const key = "test123";
-  // const url = "rtmp://o1.babahhcdn.com:1935/bb1150-lo/" + key;
+  //const url = "test.flv";
+
+  const url = "rtmp://o1.babahhcdn.com:1935/bb1150-lo/ws_rtmp";
+
+  // flv transcoding to file or to rtmp ingest
 
   const ffmpeg = child_process.spawn("ffmpeg", [
     "-f",
     "lavfi",
+
     "-i",
     "anullsrc",
 
@@ -32,6 +35,8 @@ wss.on("connection", (ws, req) => {
 
     url,
   ]);
+
+  // mp4 transcoding to a file
 
   /*
   const url = "test.mp4";
@@ -64,23 +69,24 @@ wss.on("connection", (ws, req) => {
   ]);
   */
 
-  ffmpeg.on("close", (code, signal) => {
-    console.log(
-      "FFmpeg child process closed, code " + code + ", signal " + signal
-    );
-    ws.terminate();
+  // ffmpeg handlers
+
+  ffmpeg.stderr.on("data", (data) => {
+    console.log(data.toString());
   });
 
   ffmpeg.stdin.on("error", (e) => {
     console.log(e);
   });
 
-  ffmpeg.stderr.on("data", (data) => {
-    console.log(data.toString());
+  ffmpeg.on("close", () => {
+    ws.terminate();
   });
 
+  // ws handlers
+
   ws.on("message", (msg) => {
-    console.log("DATA", msg);
+    // console.log(msg);
     ffmpeg.stdin.write(msg);
   });
 
