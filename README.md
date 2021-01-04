@@ -34,3 +34,7 @@ https://fly.io/blog/mux-fly-wocket-and-rtmp/
 https://github.com/fbsamples/Canvas-Streaming-Example
 
 https://api.video/blog/video-trends/live-streaming-a-video-using-just-the-browser
+
+```
+cat test.flv | ffmpeg -re -i - -acodec copy -vcodec copy -f flv rtmp://o1.babahhcdn.com:1935/bb1150-lo/ws_rtmp
+```

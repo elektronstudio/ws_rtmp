@@ -11,16 +11,10 @@ wss.on("connection", (ws, req) => {
   // flv transcoding to file or to rtmp ingest
 
   const ffmpeg = child_process.spawn("ffmpeg", [
-    "-f",
-    "lavfi",
-
-    "-i",
-    "anullsrc",
+    "-re",
 
     "-i",
     "-",
-
-    "-shortest",
 
     "-vcodec",
     "copy",
