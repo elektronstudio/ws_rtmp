@@ -4,9 +4,9 @@ const WebSocketServer = require("ws").Server;
 const wss = new WebSocketServer({ port: 8080 });
 
 wss.on("connection", (ws, req) => {
-  //const url = "test.flv";
+  const url = "test.flv";
 
-  const url = "rtmp://o1.babahhcdn.com:1935/bb1150-lo/ws_rtmp";
+  //const url = "rtmp://o1.babahhcdn.com:1935/bb1150-lo/ws_rtmp";
 
   // flv transcoding to file or to rtmp ingest
 

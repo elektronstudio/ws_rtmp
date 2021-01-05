@@ -25,6 +25,8 @@ docker run -it --rm test:latest ash -c "node -v"
 docker run -it --rm test:latest ash -c "ffmpeg -version"
 ```
 
+### Inspiration
+
 https://nodejs.org/en/docs/guides/nodejs-docker-webapp/
 
 https://mux.com/blog/the-state-of-going-live-from-a-browser/
@@ -34,6 +36,10 @@ https://fly.io/blog/mux-fly-wocket-and-rtmp/
 https://github.com/fbsamples/Canvas-Streaming-Example
 
 https://api.video/blog/video-trends/live-streaming-a-video-using-just-the-browser
+
+### More code snippets
+
+Piping FLV to RTMP
 
 ```
 cat test.flv | ffmpeg -re -i - -acodec copy -vcodec copy -f flv rtmp://o1.babahhcdn.com:1935/bb1150-lo/ws_rtmp
