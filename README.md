@@ -2,6 +2,8 @@
 
 Webcam WebM stream over Websocket to RTMP stream
 
+See also the client code: https://github.com/elektronstudio/ws_rtmp_client
+
 ### Usage
 
 Run locally:
@@ -36,11 +38,3 @@ https://fly.io/blog/mux-fly-wocket-and-rtmp/
 https://github.com/fbsamples/Canvas-Streaming-Example
 
 https://api.video/blog/video-trends/live-streaming-a-video-using-just-the-browser
-
-### More code snippets
-
-Piping FLV to RTMP
-
-```
-cat test.flv | ffmpeg -re -i - -acodec copy -vcodec copy -f flv rtmp://o1.babahhcdn.com:1935/bb1150-lo/ws_rtmp
-```
